@@ -26,8 +26,24 @@ def main():
     env.s = state
     env.render()
 
+    # A reward table P (states x actions matrix) is created with the taxi environment.
+    # Each element of this table is a dictionary that has the structure 
+    #           {action: [(probability, next_state, reward, done)]}
+    # An action can be encoded from 0 to 5, corresponding to (south, north, east, west, pickup, dropoff).
+    env.P[state] # Check state-action structure for a given "state"
+
+
     # IMPLEMENTING Q-LEARNING ALGORITHM
-    # Q-table: n_states x n_actions matrix
+    # Q-table is a n_states x n_actions matrix representing state-action values.
+    # Formally,
+    #    Q(s,a) = (1-alpha)*Q(s,a) + alpha*[r + gama*max_a(Q(next_s, all_a))]
+    # Where:
+    #   @ alpha is the learning rate (0 < alpha < 1)
+    #   @ gama is the discount factor (0 < gama < 1)
+    #   @ s is the state
+    #   @ a is the action
+    #   @ r is the reward
+    # It's first initialized to 0, and then values are updated after training.
     q_table = np.zeros([env.observation_space.n, env.action_space.n])
 
     # Hyperparameters
