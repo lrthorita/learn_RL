@@ -1,3 +1,4 @@
+import sys
 import gym
 import random
 import numpy as np
@@ -15,7 +16,7 @@ tf.reset_default_graph()
 #These lines establish the feed-forward part of the network used to choose actions
 inputs1 = tf.placeholder(shape=[1,16],dtype=tf.float32)
 W = tf.Variable(tf.random_uniform([16,4],0,0.01))
-b = tf.Variable(tf.random_uniform([4,1], 0, 0.01))
+b = tf.Variable(tf.random_uniform([1,4], 0, 0.01))
 Qout = tf.matmul(inputs1,W) + b
 predict = tf.argmax(Qout,1)
 
@@ -39,6 +40,8 @@ rList = []
 with tf.Session() as sess:
     sess.run(init)
     for i in range(num_episodes):
+        sys.stdout.write("\rEpisode: %i" %i)
+        sys.stdout.flush()
         #Reset environment and get first new observation
         s = env.reset()
         rAll = 0
